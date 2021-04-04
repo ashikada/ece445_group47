@@ -1,3 +1,3 @@
 function openAlert() {
-	window.alert("Hello World");
+	window.alert("Alert generated!");
 }
