@@ -1,5 +1,9 @@
-# ece445_group47
-Files included:
+# Automated IC Chip Tester
+### by Michael Ruscito, Alison Shikada, and Ryan Yoseph
+Senior Design Project at the University of Illinois: Urbana-Champaign  
+ECE 445; Spring 2021
+
+### Files included:
 - master server folder
   - INO, HTML, and JS files
   - currently has minimal items on the site itself, only a button press
@@ -10,6 +14,3 @@ Files included:
   - INO file based on [this tutorial](https://randomnerdtutorials.com/esp32-access-point-ap-web-server/)
   - interfaces with physical LEDs; communicates with server and ESP32 (inputs on site controls output on ESP32)
 - UI draft for website (PNG)
-
-## Automated IC Chip Tester
-by Michael Ruscito, Alison Shikada, and Ryan Yoseph
