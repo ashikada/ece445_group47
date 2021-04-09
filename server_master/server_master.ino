@@ -24,8 +24,19 @@ void setup(){
 
   Serial.println(WiFi.localIP());
 
-  server.on("/html", HTTP_GET, [](AsyncWebServerRequest *request){
+  // WiFi.disconnect();
+  // delay(3000);
+  // Serial.println("START");
+  // WiFi.softAP("ESP32_Network","123456789");
+  // Serial.println("The IP of the access point is");
+  // Serial.println((WiFi.softAPIP()));
+
+  server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/test.html", "text/html");
+  });
+
+  server.on("/chip_img/7400.jpg", HTTP_GET, [](AsyncWebServerRequest *request){
+    request->send(SPIFFS, "/chip_img/7400.jpg", "image/jpg");
   });
 
   server.on("/test.js", HTTP_GET, [](AsyncWebServerRequest *request){
