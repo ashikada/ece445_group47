@@ -32,16 +32,16 @@ void setup(){
   // Serial.println((WiFi.softAPIP()));
 
   server.on("/", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/test.html", "text/html");
+    request->send(SPIFFS, "/master.html", "text/html");
   });
 
   server.on("/chip_img/7400.jpg", HTTP_GET, [](AsyncWebServerRequest *request){
     request->send(SPIFFS, "/chip_img/7400.jpg", "image/jpg");
   });
 
-  server.on("/test.js", HTTP_GET, [](AsyncWebServerRequest *request){
-    request->send(SPIFFS, "/test.js", "text/javascript");
-  });
+ server.on("/master.js", HTTP_GET, [](AsyncWebServerRequest *request){
+   request->send(SPIFFS, "/master.js", "text/javascript");
+ });
 
   server.begin();
 }
