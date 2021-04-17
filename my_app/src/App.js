@@ -3,8 +3,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 import DropdownItem from 'react-bootstrap/esm/DropdownItem';
 import DropdownMenu from 'react-bootstrap/esm/DropdownMenu';
 import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
-import ToggleButton from 'react-toggle-button';
-import logo from './logo.svg';
+// import ToggleButton from 'react-toggle-button';
+// import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
@@ -31,20 +31,30 @@ class App extends Component {
   }
 
   render() {
+    const chips = ['7400', '7402', '7404', '7410', '7420', '7427', '7474', '7485', '7486', '74109N', '74151N', '74153N', '74157N', '74161N', '74163E', '74194A/E', '74195E', 'SN74LS279'];
+    const items = [];
+
+    for (const [index, value] of chips.entries()) {
+      items.push(
+        <DropdownItem key={index}>{value}</DropdownItem>
+      )
+    }
+
     return (
       <React.Fragment>
+        <h1 className="App">Automatic IC Chip Tester</h1>
+        <h6 className="App">by Alison Shikada, Michael Ruscito, and Ryan Yoseph</h6>
+        <br/>
 
-
-        <Dropdown>
+        <Dropdown className="App">
           <DropdownToggle variant="light" id="dropdown-basic">
             Dropdown Button
           </DropdownToggle>
 
           <DropdownMenu>
-            {/* href="#/action-1" for link to new webpage */}
-            <DropdownItem>Action</DropdownItem>
-            <DropdownItem>Another Action</DropdownItem>
-            <DropdownItem>Something else</DropdownItem>
+            {// href="#/action-1" for link to new webpage 
+            }
+            {items}
           </DropdownMenu>  
         </Dropdown>
       </React.Fragment>
