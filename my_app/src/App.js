@@ -7,6 +7,9 @@ import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 // import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
+import chip7400 from './chips/7400.png'
+import {Button} from '@material-ui/core';
+
 
 class App extends Component {
   constructor(props) {
@@ -41,23 +44,33 @@ class App extends Component {
     }
 
     return (
-      <React.Fragment>
-        <h1 className="App">Automatic IC Chip Tester</h1>
-        <h6 className="App">by Alison Shikada, Michael Ruscito, and Ryan Yoseph</h6>
+      <div className="App">
+        <h1>Automatic IC Chip Tester</h1>
+        <h6>by Alison Shikada, Michael Ruscito, and Ryan Yoseph</h6>
         <br/>
 
-        <Dropdown className="App">
+        <Dropdown>
           <DropdownToggle variant="light" id="dropdown-basic">
             Dropdown Button
           </DropdownToggle>
 
           <DropdownMenu>
-            {// href="#/action-1" for link to new webpage 
-            }
+            {/* href="#/action-1" for link to new webpage  */}
             {items}
           </DropdownMenu>  
         </Dropdown>
-      </React.Fragment>
+
+        <br/>
+        <img src={chip7400} alt=""/>
+        <br/>
+        <br/>
+
+        <Button 
+          variant="contained"
+          onClick={() => this.handleStateChange(this.state.ledOn)}
+        >Submit</Button>
+
+      </div>
     );
   }
 

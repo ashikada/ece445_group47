@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "@testing-library/jest-dom": "^5.11.10",
     "@testing-library/react": "^11.2.6",
     "@testing-library/user-event": "^12.8.3",
@@ -41,9 +42,9 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-class-properties": "^7.10.1",
+    "@babel/preset-react": "^7.10.1",
     "customize-cra": "^1.0.0",
-    "react-app-rewired": "^2.1.6",
-    "@babel/preset-react": "^7.10.1"
+    "react-app-rewired": "^2.1.6"
   },
   "proxy": "http://192.168.10.171",
   "awot-static": {
@@ -55,5 +56,7 @@
       "service-worker.js"
     ]
   },
-  "plugins": ["@babel/plugin-syntax-jsx"]
+  "plugins": [
+    "@babel/plugin-syntax-jsx"
+  ]
 }
