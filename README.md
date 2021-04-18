@@ -7,15 +7,18 @@ ECE 445; Spring 2021
 - my-app folder
   - React app generated with [this tutorial to host both back and front end](https://awot.net/en/guide/tutorial.html#front-end)
   - Why? I was having trouble integrating React with preexiting files and file structure (src folder, HTML + JS communication)
+  - Currently has:
+    - Title and one image
+    - all chips under dropdown menu (can't select any of them yet)
+    - Submit button (changes internal LED on dev board)
   - Other notes: 
     - I don't need SPIFFS filesystem anymore
     - Development cycle is a lot faster, almost instantaneous with simultaneous editing and viewing on localhost
-    - Tutorial made a proxy with IP address and localhost, so no need to go through Arduino IDE
+- status{date}.png
+
 - old_draft folder
   - INO, HTML, JS, and PNG files
-  - currently has minimal items on the site itself; headers, image, and alert
   - data folder contains all relevant non-INO files
-    - chip_img folder contains image of ~60% of chips in database
 - tutorials
   - INO files based on youtube videos from [this playlist](https://youtube.com/playlist?list=PLfPtpZzK2Z_QO8snrdnRTTNtQvLw35Zfc)
   - uses [this web ide](http://easycoding.tn/esp32/demos/code/)
