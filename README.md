@@ -15,7 +15,7 @@ ECE 445; Spring 2021
     - I don't need SPIFFS filesystem anymore
     - Development cycle is a lot faster, almost instantaneous with simultaneous editing and viewing on localhost
 - status{date}.png
-
+-------------------------
 - old_draft folder
   - INO, HTML, JS, and PNG files
   - data folder contains all relevant non-INO files
