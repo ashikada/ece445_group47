@@ -7,7 +7,7 @@ import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 // import logo from './logo.svg';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-import chip7400 from './chips/7400.png'
+import chipArr from './chips/chips.js'
 import {Button} from '@material-ui/core';
 
 
@@ -34,7 +34,9 @@ class App extends Component {
   }
 
   render() {
-    const chips = ['7400', '7402', '7404', '7410', '7420', '7427', '7474', '7485', '7486', '74109N', '74151N', '74153N', '74157N', '74161N', '74163E', '74194A/E', '74195E', 'SN74LS279'];
+    const chips = ['7400', '7402', '7404', '7410', '7420', '7427', '7474', '7485', '7486',
+    '74109N', '74151N', '74153N', '74157N', '74161N', '74163E', '74194A/E', '74195E', 'SN74LS279'];
+    const titleArr = ['Quad 2-Input NAND Gate']
     const items = [];
 
     for (const [index, value] of chips.entries()) {
@@ -54,14 +56,20 @@ class App extends Component {
             Dropdown Button
           </DropdownToggle>
 
-          <DropdownMenu>
+          <DropdownMenu className="dropdown-menu">
             {/* href="#/action-1" for link to new webpage  */}
             {items}
           </DropdownMenu>  
         </Dropdown>
 
         <br/>
-        <img src={chip7400} alt=""/>
+        <br/>
+        <br/>
+
+        <h5>{titleArr[0]}</h5>
+        <img src={chipArr[0]} alt=""/>
+
+        <br/>
         <br/>
         <br/>
 
