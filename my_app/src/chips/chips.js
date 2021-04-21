@@ -10,8 +10,7 @@ import chip7486 from './7486.png'
 import chip74151N from './74151N.png'
 import chip74157N from './74157N.png'
 
-
-export default [
+var chipArr = [
     chip7400,
     chip7402,
     chip7404,
@@ -24,3 +23,5 @@ export default [
     chip74151N,
     chip74157N
 ];
+
+export default chipArr;
