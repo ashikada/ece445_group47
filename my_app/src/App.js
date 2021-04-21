@@ -12,28 +12,30 @@ class App extends Component {
     super(props);
     this.state = { 
       ledOn: false, 
-      homePage: true
+      homePage: true,
+      chipIdx:0
     };
 
     this.changePage = this.changePage.bind(this);
     this.chooseScreen = this.chooseScreen.bind(this);
+    this.chooseChip = this.chooseChip.bind(this);
   }
 
-  setLedState(state) {
-    this.setState({ ledOn: state !== '0' });
-  }
+  // setLedState(state) {
+  //   this.setState({ ledOn: state !== '0' });
+  // }
 
-  componentDidMount() {
-    fetch('/led')
-      .then(response => response.text())
-      .then(state => this.setLedState(state));
-  }
+  // componentDidMount() {
+  //   fetch('/led')
+  //     .then(response => response.text())
+  //     .then(state => this.setLedState(state));
+  // }
 
-  handleStateChange(ledOn) {
-    fetch('/led', { method: 'PUT', body: ledOn ? '0' : '1' })
-      .then(response => response.text())
-      .then(state => this.setLedState(state));
-  }
+  // handleStateChange(ledOn) {
+  //   fetch('/led', { method: 'PUT', body: ledOn ? '0' : '1' })
+  //     .then(response => response.text())
+  //     .then(state => this.setLedState(state));
+  // }
 
   changePage() {
     let cur_state = this.state.homePage;
@@ -42,12 +44,19 @@ class App extends Component {
     this.setState({ homePage : new_state});
   }
 
+  chooseChip(chipIndex){
+    this.setState({chipIdx: chipIndex})
+  }
+
   chooseScreen(){
     if(this.state.homePage){
 
       return (
         <div className="App">
-          <Home/>
+          <Home 
+            chipIdx={this.state.chipIdx}
+            chooseChip={this.chooseChip}
+          />
           <Button 
             variant="contained"
             onClick={this.changePage}
@@ -58,12 +67,16 @@ class App extends Component {
     } else {
 
       return (
-        <div className="App">
-          <Output/>
+        <div>
           <Button 
             variant="contained"
             onClick={this.changePage}
-          >Submit</Button>
+          >Back</Button>
+
+          <Output
+            chipIdx={this.state.chipIdx}
+            chooseChip={this.chooseChip}
+          />
         </div>
       )
       
@@ -72,7 +85,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App">
+      <div>
         <this.chooseScreen/>
       </div>
     );

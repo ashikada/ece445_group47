@@ -7,16 +7,9 @@ import DropdownToggle from 'react-bootstrap/esm/DropdownToggle';
 import chipArr from './chips'
 
 class Home extends Component{
-  constructor(props) {
-    super(props);
-    this.state = {
-      chipIdx:0
-    };
-  }
-
-  chooseChip(chipIndex){
-    this.setState({chipIdx: chipIndex})
-  }
+  // constructor(props) {
+  //   super(props);
+  // }
 
   render() {
     const chips = ['7400', '7402', '7404', '7410', '7420', '7427', '7474', '7485', '7486', '74109N', '74151N', '74153N', '74157N', '74161N', '74163E', '74194A/E', '74195E'];
@@ -29,7 +22,7 @@ class Home extends Component{
       items.push(
         <DropdownItem 
           key={index}
-          onClick={() => this.chooseChip(index)}
+          onClick={() => this.props.chooseChip(index)}
         >
           {value}
         </DropdownItem>
@@ -45,7 +38,7 @@ class Home extends Component{
 
         <Dropdown>
           <DropdownToggle variant="light" id="dropdown-basic">
-            {chips[this.state.chipIdx]}
+            {chips[this.props.chipIdx]}
           </DropdownToggle>
 
           <DropdownMenu className="dropdown-menu">
@@ -56,10 +49,10 @@ class Home extends Component{
 
         <br/><br/>
 
-        <h2>{titleArr[this.state.chipIdx]}</h2>
+        <h2>{titleArr[this.props.chipIdx]}</h2>
 
         <br/>
-        <img src={chipArr[this.state.chipIdx]} alt=""/>
+        <img src={chipArr[this.props.chipIdx]} alt=""/>
 
         <br/><br/><br/>
 
