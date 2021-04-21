@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './components/Home';
+import Output from './components/Output';
 import {Button} from '@material-ui/core';
 
 class App extends Component { 
@@ -13,6 +14,9 @@ class App extends Component {
       ledOn: false, 
       homePage: true
     };
+
+    this.changePage = this.changePage.bind(this);
+    this.chooseScreen = this.chooseScreen.bind(this);
   }
 
   setLedState(state) {
@@ -31,14 +35,45 @@ class App extends Component {
       .then(state => this.setLedState(state));
   }
 
+  changePage() {
+    let cur_state = this.state.homePage;
+    let new_state = cur_state ? false : true;
+
+    this.setState({ homePage : new_state});
+  }
+
+  chooseScreen(){
+    if(this.state.homePage){
+
+      return (
+        <div className="App">
+          <Home/>
+          <Button 
+            variant="contained"
+            onClick={this.changePage}
+          >Submit</Button>
+        </div>
+      );
+
+    } else {
+
+      return (
+        <div className="App">
+          <Output/>
+          <Button 
+            variant="contained"
+            onClick={this.changePage}
+          >Submit</Button>
+        </div>
+      )
+      
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <Home/>
-        <Button 
-          variant="contained"
-          onClick={() => this.handleStateChange(this.state.ledOn)}
-        >Submit</Button>
+        <this.chooseScreen/>
       </div>
     );
   }
