@@ -9,11 +9,14 @@ import {Button} from '@material-ui/core';
 class App extends Component { 
   constructor(props) {
     super(props);
-    this.state = { ledOn: false };
+    this.state = { 
+      ledOn: false, 
+      homePage: true
+    };
   }
 
   setLedState(state) {
-    this.setState({ ledOn: state !== '0' })
+    this.setState({ ledOn: state !== '0' });
   }
 
   componentDidMount() {
