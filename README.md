@@ -6,14 +6,10 @@ ECE 445; Spring 2021
 ### Files included:
 - my-app folder
   - React app generated with [this tutorial to host both back and front end](https://awot.net/en/guide/tutorial.html#front-end)
-  - Why? I was having trouble integrating React with preexiting files and file structure (src folder, HTML + JS communication)
+  - Development through "npm start", is hosted on local WiFi with softAP commented out
   - Currently has:
-    - Title and one image
-    - all chips under dropdown menu (can't select any of them yet)
-    - Submit button (changes internal LED on dev board)
-  - Other notes: 
-    - I don't need SPIFFS filesystem anymore
-    - Development cycle is a lot faster, almost instantaneous with simultaneous editing and viewing on localhost
+    - Home Screen - can select chip to submit. Image will change dependent on selection. Submit goes to Output but no calculations done.
+    - Output Screen - has a title and the same chip image as selected
 - status{date}.png
 -------------------------
 - old_draft folder
