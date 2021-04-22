@@ -9,15 +9,17 @@
 WiFiServer server(80);
 Application app;
 bool ledOn;
+char chipIdx;
 
-void readLed(Request &req, Response &res){
-  res.print(ledOn);
+void readChip(Request &req, Response &res){
+  res.print(chipIdx);
+  Serial.println(chipIdx);
 }
 
-void updateLed(Request &req, Response &res){
-  ledOn = (req.read() != '0');
-  digitalWrite(LED_BUILTIN, ledOn);
-  return readLed(req, res);
+void updateChip(Request &req, Response &res){
+  chipIdx = (req.read());
+  // digitalWrite(LED_BUILTIN, ledOn);
+  return readChip(req, res);
 }
 
 void setup() {
@@ -41,8 +43,8 @@ void setup() {
   Serial.println((WiFi.softAPIP()));
   */
 
-  app.get("/led", &readLed);
-  app.put("/led", &updateLed);
+  app.get("/chip", &readChip);
+  app.put("/chip", &updateChip);
   app.use(staticFiles());
 
   server.begin();

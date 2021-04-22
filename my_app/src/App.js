@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-// import ToggleButton from 'react-toggle-button';
-// import logo from './logo.svg';
+import ToggleButton from 'react-toggle-button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './components/Home';
@@ -21,21 +20,23 @@ class App extends Component {
     this.chooseChip = this.chooseChip.bind(this);
   }
 
-  // setLedState(state) {
-  //   this.setState({ ledOn: state !== '0' });
-  // }
+  setChipState(state) {
+    this.setState({ chipIdx: state });
+  }
 
-  // componentDidMount() {
-  //   fetch('/led')
-  //     .then(response => response.text())
-  //     .then(state => this.setLedState(state));
-  // }
+  componentDidMount() {
+    fetch('/chip')
+      .then(response => response.text())
+      .then(state => this.setChipState(state));
+  }
 
-  // handleStateChange(ledOn) {
-  //   fetch('/led', { method: 'PUT', body: ledOn ? '0' : '1' })
-  //     .then(response => response.text())
-  //     .then(state => this.setLedState(state));
-  // }
+  handleStateChange(chipIdx) {
+    fetch('/chip', { method: 'PUT', body: String(chipIdx) })
+      .then(response => response.text())
+      .then(state => this.setChipState(state));
+
+
+  }
 
   changePage() {
     let cur_state = this.state.homePage;
@@ -59,8 +60,17 @@ class App extends Component {
           />
           <Button 
             variant="contained"
-            onClick={this.changePage}
+            value={this.state.chipIdx}
+            onClick={ this.changePage }
+
+            // Anand:
+            // value={this.state.chipIdx}
+            // onClick={value => this.handleStateChange(value)}
           >Submit</Button>
+          <ToggleButton
+            value={this.state.chipIdx}
+            onToggle={value => this.handleStateChange(value)}
+          />
         </div>
       );
 
@@ -70,7 +80,11 @@ class App extends Component {
         <div>
           <Button 
             variant="contained"
-            onClick={this.changePage}
+            onClick={ this.changePage }
+
+            // Anand (same as above):
+            // value={this.state.chipIdx}
+            // onClick={value => this.handleStateChange(value)}
           >Back</Button>
 
           <Output
