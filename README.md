@@ -8,7 +8,7 @@ ECE 445; Spring 2021
   - React app generated with [this tutorial to host both back and front end](https://awot.net/en/guide/tutorial.html#front-end)
   - Development through "npm start", is hosted on local WiFi with softAP commented out
   - Currently has:
-    - Home Screen - can select chip to submit. Image will change dependent on selection. Submit goes to Output but no calculations done.
+    - Home Screen - can select chip to submit. Image will change dependent on selection. Submit goes to Output and chipIdx is passed to .ino file but no calculations done.
     - Output Screen - has a title and the same chip image as selected
 - status{date}.png
 -------------------------

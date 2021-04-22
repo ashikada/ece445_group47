@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ToggleButton from 'react-toggle-button';
+// import ToggleButton from 'react-toggle-button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 import Home from './components/Home';
@@ -30,12 +30,10 @@ class App extends Component {
       .then(state => this.setChipState(state));
   }
 
-  handleStateChange(chipIdx) {
-    fetch('/chip', { method: 'PUT', body: String(chipIdx) })
+  handleClick() {
+    fetch('/chip', { method: 'PUT', body: this.state.chipIdx })
       .then(response => response.text())
       .then(state => this.setChipState(state));
-
-
   }
 
   changePage() {
@@ -61,16 +59,8 @@ class App extends Component {
           <Button 
             variant="contained"
             value={this.state.chipIdx}
-            onClick={ this.changePage }
-
-            // Anand:
-            // value={this.state.chipIdx}
-            // onClick={value => this.handleStateChange(value)}
+            onClick={() => {this.handleClick(); this.changePage()}}
           >Submit</Button>
-          <ToggleButton
-            value={this.state.chipIdx}
-            onToggle={value => this.handleStateChange(value)}
-          />
         </div>
       );
 
@@ -81,10 +71,6 @@ class App extends Component {
           <Button 
             variant="contained"
             onClick={ this.changePage }
-
-            // Anand (same as above):
-            // value={this.state.chipIdx}
-            // onClick={value => this.handleStateChange(value)}
           >Back</Button>
 
           <Output
