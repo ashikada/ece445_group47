@@ -11,6 +11,7 @@ Application app;
 bool ledOn;
 char chipIdx;
 
+// Test Vector Setup
 #include <MCP23S17.h>
 
 #ifdef __PIC32MX__
@@ -21,10 +22,8 @@ DSPI0 SPI;
 #endif
 
 const uint8_t chipSelect = 5; //  CS pin
-
 MCP23S17 portEx(&SPI, chipSelect, 0);
-
-//unsigned long vectorTime;
+unsigned long vectorTime;
 
 /* ZIF Pin    PortEx/ESP Pin            ZIF Pin    PortEx/ESP Pin
  *  1         port   0                    13        Decoder 00
@@ -71,10 +70,10 @@ MCP23S17 portEx(&SPI, chipSelect, 0);
 #define chip23_esp 27
 #define chip24_esp 12
 
-
+//  Test Vector Functions
 
 bool test_7400() {
-  //  Set 5V decoder pins
+  //  set 5V decoder pins
   pinMode(decoderB, OUTPUT);
   pinMode(decoderA, OUTPUT);
   digitalWrite(decoderB, LOW);
@@ -82,55 +81,470 @@ bool test_7400() {
   //  set IC chip GND
   portEx.pinMode(chip7, OUTPUT);
   portEx.digitalWrite(chip7, LOW);
-
   //  set IC chip inputs (outputs on port expander)
   portEx.pinMode(chip1, OUTPUT);
   portEx.pinMode(chip2, OUTPUT);
   portEx.pinMode(chip4, OUTPUT);
   portEx.pinMode(chip5, OUTPUT);
-  portEx.pinMode(chip18, OUTPUT); //  pin9
-  portEx.pinMode(chip17, OUTPUT); //  pin10
-  portEx.pinMode(chip15, OUTPUT); //  pin12
-  portEx.pinMode(chip14, OUTPUT); //  pin13
+  portEx.pinMode(chip18, OUTPUT);
+  portEx.pinMode(chip17, OUTPUT);
+  portEx.pinMode(chip15, OUTPUT);
+  portEx.pinMode(chip14, OUTPUT);
   //  set IC chip outputs (inputs on port expander)
   portEx.pinMode(chip3, INPUT);
   portEx.pinMode(chip6, INPUT);
-  portEx.pinMode(chip19, INPUT);  //  pin8
-  portEx.pinMode(chip16, INPUT);  //  pin11
+  portEx.pinMode(chip19, INPUT);
+  portEx.pinMode(chip16, INPUT);
+  //  set unused ZIF pins
+  portEx.pinMode(chip8, OUTPUT);
+  portEx.pinMode(chip20, OUTPUT);
+  portEx.pinMode(chip21, OUTPUT);
+
+  Serial.println("Testing 7400 Chip");
+  vectorTime = millis();
 
   //  test vectors
   portEx.writePort(0x0000);
-  /*
   uint16_t output = portEx.readPort();
   //Serial.println(output);
   if (output != 0x2424) {
     return false;
   }
-  */
-  uint8_t output = portEx.digitalRead(chip3);
-  Serial.println(output);
-  if (output != 1) {
-    Serial.println("Failed");
+  portEx.writePort(0x0912);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2D36) {
     return false;
   }
-  Serial.println("Passed");
-  output = portEx.digitalRead(chip6);
-  if (output != 1) {
+  portEx.writePort(0x1209);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x362D) {
     return false;
   }
-  output = portEx.digitalRead(chip19);
-  if (output != 1) {
-    return false;
-  }
-  output = portEx.digitalRead(chip16);
-  if (output != 1) {
+  portEx.writePort(0x1B1B);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x1B1B) {
     return false;
   }
 
+  vectorTime = millis() - vectorTime;
   return true;
 }
 
+bool test_7402() {
+  //  set 5V decoder pins
+  pinMode(decoderB, OUTPUT);
+  pinMode(decoderA, OUTPUT);
+  digitalWrite(decoderB, LOW);
+  digitalWrite(decoderA, LOW);
+  //  set IC chip GND
+  portEx.pinMode(chip7, OUTPUT);
+  portEx.digitalWrite(chip7, LOW);
+  //  set IC chip inputs (outputs on port expander)
+  portEx.pinMode(chip2, OUTPUT);
+  portEx.pinMode(chip3, OUTPUT);
+  portEx.pinMode(chip5, OUTPUT);
+  portEx.pinMode(chip6, OUTPUT);
+  portEx.pinMode(chip19, OUTPUT);
+  portEx.pinMode(chip18, OUTPUT);
+  portEx.pinMode(chip16, OUTPUT);
+  portEx.pinMode(chip15, OUTPUT);
+  //  set IC chip outputs (inputs on port expander)
+  portEx.pinMode(chip1, INPUT);
+  portEx.pinMode(chip4, INPUT);
+  portEx.pinMode(chip17, INPUT);
+  portEx.pinMode(chip14, INPUT);
+  //  set unused ZIF pins
+  portEx.pinMode(chip8, OUTPUT);
+  portEx.pinMode(chip20, OUTPUT);
+  portEx.pinMode(chip21, OUTPUT);
 
+  Serial.println("Testing 7402 Chip");
+  vectorTime = millis();
+
+  //  test vectors
+  portEx.writePort(0x0000);
+  uint16_t output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x0909) {
+    return false;
+  }
+  portEx.writePort(0x1224);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x1224) {
+    return false;
+  }
+  portEx.writePort(0x2412);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2412) {
+    return false;
+  }
+  portEx.writePort(0x3636);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3636) {
+    return false;
+  }
+
+  vectorTime = millis() - vectorTime;
+  return true;
+}
+
+bool test_7404() {
+  //  set 5V decoder pins
+  pinMode(decoderB, OUTPUT);
+  pinMode(decoderA, OUTPUT);
+  digitalWrite(decoderB, LOW);
+  digitalWrite(decoderA, LOW);
+  //  set IC chip GND
+  portEx.pinMode(chip7, OUTPUT);
+  portEx.digitalWrite(chip7, LOW);
+  //  set IC chip inputs (outputs on port expander)
+  portEx.pinMode(chip1, OUTPUT);
+  portEx.pinMode(chip3, OUTPUT);
+  portEx.pinMode(chip5, OUTPUT);
+  portEx.pinMode(chip18, OUTPUT);
+  portEx.pinMode(chip16, OUTPUT);
+  portEx.pinMode(chip14, OUTPUT);
+  //  set IC chip outputs (inputs on port expander)
+  portEx.pinMode(chip2, INPUT);
+  portEx.pinMode(chip4, INPUT);
+  portEx.pinMode(chip6, INPUT);
+  portEx.pinMode(chip19, INPUT);
+  portEx.pinMode(chip17, INPUT);
+  portEx.pinMode(chip15, INPUT);
+  //  set unused ZIF pins
+  portEx.pinMode(chip8, OUTPUT);
+  portEx.pinMode(chip20, OUTPUT);
+  portEx.pinMode(chip21, OUTPUT);
+
+  Serial.println("Testing 7404 Chip");
+  vectorTime = millis();
+
+  //  test vectors
+  portEx.writePort(0x0000);
+  uint16_t output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2A2A) {
+    return false;
+  }
+  portEx.writePort(0x1515);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x1515) {
+    return false;
+  }
+
+  vectorTime = millis() - vectorTime;
+  return true;
+}
+
+bool test_7410() {
+  //  set 5V decoder pins
+  pinMode(decoderB, OUTPUT);
+  pinMode(decoderA, OUTPUT);
+  digitalWrite(decoderB, LOW);
+  digitalWrite(decoderA, LOW);
+  //  set IC chip GND
+  portEx.pinMode(chip7, OUTPUT);
+  portEx.digitalWrite(chip7, LOW);
+  //  set IC chip inputs (outputs on port expander)
+  portEx.pinMode(chip1, OUTPUT);
+  portEx.pinMode(chip2, OUTPUT);
+  portEx.pinMode(chip3, OUTPUT);
+  portEx.pinMode(chip4, OUTPUT);
+  portEx.pinMode(chip5, OUTPUT);
+  portEx.pinMode(chip18, OUTPUT);
+  portEx.pinMode(chip17, OUTPUT);
+  portEx.pinMode(chip16, OUTPUT);
+  portEx.pinMode(chip14, OUTPUT);
+  //  set IC chip outputs (inputs on port expander)
+  portEx.pinMode(chip6, INPUT);
+  portEx.pinMode(chip19, INPUT);
+  portEx.pinMode(chip15, INPUT);
+  //  set unused ZIF pins
+  portEx.pinMode(chip8, OUTPUT);
+  portEx.pinMode(chip20, OUTPUT);
+  portEx.pinMode(chip21, OUTPUT);
+
+  Serial.println("Testing 7410 Chip");
+  vectorTime = millis();
+
+  //  test vectors
+  portEx.writePort(0x0000);
+  uint16_t output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2220) {
+    return false;
+  }
+  portEx.writePort(0x0510);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2730) {
+    return false;
+  }
+  portEx.writePort(0x080A);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2A2A) {
+    return false;
+  }
+  portEx.writePort(0x0D1A);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2F3A) {
+    return false;
+  }
+  portEx.writePort(0x1005);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3225) {
+    return false;
+  }
+  portEx.writePort(0x1515);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3735) {
+    return false;
+  }
+  portEx.writePort(0x180F);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3A2F) {
+    return false;
+  }
+  portEx.writePort(0x1D1F);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x1D1F) {
+    return false;
+  }
+
+  vectorTime = millis() - vectorTime;
+  return true;
+}
+
+bool test_7420() {
+  //  set 5V decoder pins
+  pinMode(decoderB, OUTPUT);
+  pinMode(decoderA, OUTPUT);
+  digitalWrite(decoderB, LOW);
+  digitalWrite(decoderA, LOW);
+  //  set IC chip GND
+  portEx.pinMode(chip7, OUTPUT);
+  portEx.digitalWrite(chip7, LOW);
+  //  set IC chip inputs (outputs on port expander)
+  portEx.pinMode(chip1, OUTPUT);
+  portEx.pinMode(chip2, OUTPUT);
+  portEx.pinMode(chip4, OUTPUT);
+  portEx.pinMode(chip5, OUTPUT);
+  portEx.pinMode(chip18, OUTPUT);
+  portEx.pinMode(chip17, OUTPUT);
+  portEx.pinMode(chip15, OUTPUT);
+  portEx.pinMode(chip14, OUTPUT);
+  //  set IC chip outputs (inputs on port expander)
+  portEx.pinMode(chip6, INPUT);
+  portEx.pinMode(chip19, INPUT);
+  //  set unused ZIF pins
+  portEx.pinMode(chip8, OUTPUT);
+  portEx.pinMode(chip20, OUTPUT);
+  portEx.pinMode(chip21, OUTPUT);
+  portEx.pinMode(chip3, OUTPUT);
+  portEx.pinMode(chip16, OUTPUT);
+
+  Serial.println("Testing 7420 Chip");
+  vectorTime = millis();
+
+  //  test vectors
+  portEx.writePort(0x0000);
+  uint16_t output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2020) {
+    return false;
+  }
+  portEx.writePort(0x0110);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2130) {
+    return false;
+  }
+  portEx.writePort(0x0208);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2228) {
+    return false;
+  }
+  portEx.writePort(0x0318);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2338) {
+    return false;
+  }
+  portEx.writePort(0x0802);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2822) {
+    return false;
+  }
+  portEx.writePort(0x0912);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2932) {
+    return false;
+  }
+  portEx.writePort(0x0A0A);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2A2A) {
+    return false;
+  }
+  portEx.writePort(0x0B1A);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2B3A) {
+    return false;
+  }
+  portEx.writePort(0x1001);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3021) {
+    return false;
+  }
+  portEx.writePort(0x1111);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3131) {
+    return false;
+  }
+  portEx.writePort(0x1209);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3229) {
+    return false;
+  }
+  portEx.writePort(0x1319);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3339) {
+    return false;
+  }
+  portEx.writePort(0x1803);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3823) {
+    return false;
+  }
+  portEx.writePort(0x1913);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3933) {
+    return false;
+  }
+  portEx.writePort(0x1A0B);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x3A2B) {
+    return false;
+  }
+  portEx.writePort(0x1B1B);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x1B1B) {
+    return false;
+  }
+
+  vectorTime = millis() - vectorTime;
+  return true;
+}
+
+bool test_7427() {
+  //  set 5V decoder pins
+  pinMode(decoderB, OUTPUT);
+  pinMode(decoderA, OUTPUT);
+  digitalWrite(decoderB, LOW);
+  digitalWrite(decoderA, LOW);
+  //  set IC chip GND
+  portEx.pinMode(chip7, OUTPUT);
+  portEx.digitalWrite(chip7, LOW);
+  //  set IC chip inputs (outputs on port expander)
+  portEx.pinMode(chip1, OUTPUT);
+  portEx.pinMode(chip2, OUTPUT);
+  portEx.pinMode(chip3, OUTPUT);
+  portEx.pinMode(chip4, OUTPUT);
+  portEx.pinMode(chip5, OUTPUT);
+  portEx.pinMode(chip18, OUTPUT);
+  portEx.pinMode(chip17, OUTPUT);
+  portEx.pinMode(chip16, OUTPUT);
+  portEx.pinMode(chip14, OUTPUT);
+  //  set IC chip outputs (inputs on port expander)
+  portEx.pinMode(chip6, INPUT);
+  portEx.pinMode(chip19, INPUT);
+  portEx.pinMode(chip15, INPUT);
+  //  set unused ZIF pins
+  portEx.pinMode(chip8, OUTPUT);
+  portEx.pinMode(chip20, OUTPUT);
+  portEx.pinMode(chip21, OUTPUT);
+
+  Serial.println("Testing 7427 Chip");
+  vectorTime = millis();
+
+  //  test vectors
+  portEx.writePort(0x0000);
+  uint16_t output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x2220) {
+    return false;
+  }
+  portEx.writePort(0x0510);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x0510) {
+    return false;
+  }
+  portEx.writePort(0x080A);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x080A) {
+    return false;
+  }
+  portEx.writePort(0x0D1A);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x0D1A) {
+    return false;
+  }
+  portEx.writePort(0x1005);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x1005) {
+    return false;
+  }
+  portEx.writePort(0x1515);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x1515) {
+    return false;
+  }
+  portEx.writePort(0x180F);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x180F) {
+    return false;
+  }
+  portEx.writePort(0x1D1F);
+  output = portEx.readPort();
+  //Serial.println(output);
+  if (output != 0x1D1F) {
+    return false;
+  }
+
+  vectorTime = millis() - vectorTime;
+  return true;
+}
 
 
 void readChip(Request &req, Response &res){
@@ -141,6 +555,8 @@ void readChip(Request &req, Response &res){
   } else {
     Serial.println("False");
   }
+  Serial.print("Test Run Time: "); //  total time to test chip
+  Serial.println(vectorTime);
 }
 
 void updateChip(Request &req, Response &res){
@@ -175,6 +591,9 @@ void setup() {
   app.use(staticFiles());
 
   server.begin();
+
+  // Port Expander Setup
+  portEx.begin();
 }
 
 void loop() {
