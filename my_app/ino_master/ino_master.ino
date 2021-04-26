@@ -2,8 +2,10 @@
 #include "aWOT.h"
 #include "StaticFiles.h"
 
-#define WIFI_SSID "WAVLINK-N"
-#define WIFI_PASSWORD "Familydinner227"
+// #define WIFI_SSID "WAVLINK-N"
+// #define WIFI_PASSWORD "Familydinner227"
+#define WIFI_SSID "303Fifth"
+#define WIFI_PASSWORD "IlliniBlue-3"
 #define LED_BUILTIN 2
 
 WiFiServer server(80);
@@ -106,28 +108,28 @@ bool test_7400() {
   //  test vectors
   portEx.writePort(0x0000);
   uint16_t output = portEx.readPort();
-  //Serial.println(output);
+  Serial.println(output);
   if (output != 0x2424) {
     return false;
   }
   portEx.writePort(0x0912);
   output = portEx.readPort();
-  //Serial.println(output);
+  Serial.println(output);
   if (output != 0x2D36) {
     return false;
   }
   portEx.writePort(0x1209);
   output = portEx.readPort();
-  //Serial.println(output);
+  Serial.println(output);
   if (output != 0x362D) {
     return false;
   }
   portEx.writePort(0x1B1B);
   output = portEx.readPort();
-  //Serial.println(output);
-  if (output != 0x1B1B) {
-    return false;
-  }
+  Serial.println(output);
+  // if (output != 0x1B1B) {
+  //   return false;
+  // }
 
   vectorTime = millis() - vectorTime;
   return true;
