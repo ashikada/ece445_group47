@@ -73,7 +73,7 @@ unsigned long vectorTime;
 #define chip24_esp 12
 
 #define greenLED 17
-#define redLED 16
+#define blueLED 16
 
 //  Test Vector Functions
 
@@ -1288,7 +1288,7 @@ void readChip(Request &req, Response &res){
   res.print(chipIdx);
   Serial.println(chipIdx);
   bool result;
-  switch (chipIdx) {
+  switch (chipIdx) {  //  this does not work properly
     case 0 :
       result = test_7400();
       break;
@@ -1343,7 +1343,7 @@ void readChip(Request &req, Response &res){
       break;
       */
     default :
-      result = false;
+      result = true;
   }
   Serial.print("Result:" );
   Serial.println(result);
@@ -1353,7 +1353,7 @@ void readChip(Request &req, Response &res){
   if (result) {
     digitalWrite(greenLED, HIGH);
   } else {
-    digitalWrite(redLED, HIGH);
+    digitalWrite(blueLED, HIGH);
   }
 
 }
@@ -1394,7 +1394,7 @@ void setup() {
   // Port Expander Setup
   portEx.begin();
   pinMode(greenLED, OUTPUT);
-  pinMode(redLED, OUTPUT);
+  pinMode(blueLED, OUTPUT);
 }
 
 void loop() {
