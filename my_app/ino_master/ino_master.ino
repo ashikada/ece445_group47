@@ -1718,24 +1718,24 @@ bool test_74LS279() {
   portEx.writePort(0x3B37);
   portEx.writePort(0x2211);
   uint16_t output = portEx.readPort();
-  //Serial.println(output, HEX);
-  if (output != 0x6659) {
+  Serial.println(output, HEX);
+  if (output != 0x6259) {
     unsigned long endTime = micros();
     vectorTime = endTime - startTime;
     return false;
   }
   portEx.writePort(0x1926);
   output = portEx.readPort();
-  //Serial.println(output, HEX);
-  if (output != 0x1926) {
+  Serial.println(output, HEX);
+  if (output != 0x1D26) {
     unsigned long endTime = micros();
     vectorTime = endTime - startTime;
     return false;
   }
   portEx.writePort(0x3B37);
   output = portEx.readPort();
-  //Serial.println(output, HEX);
-  if (output != 0x3B37) {
+  Serial.println(output, HEX);
+  if (output != 0x7F3F) {
     unsigned long endTime = micros();
     vectorTime = endTime - startTime;
     return false;
@@ -1757,6 +1757,18 @@ void readChip(Request &req, Response &res){
       break;
     case 49 :
       result = test_7402();
+      if (!result) {
+        result = test_74151N();
+      }
+      if (!result) {
+        result = test_74153N();
+      }
+      if (!result) {
+        result = test_74157N();
+      }
+      if (!result) {
+        result = test_74LS279();
+      }
       break;
     case 50 :
       result = test_7404();
@@ -1782,6 +1794,7 @@ void readChip(Request &req, Response &res){
     case 57 :
       result = test_74109N();
       break;
+      /*
     case 10 :
       result = test_74151N();
       break;
@@ -1791,7 +1804,6 @@ void readChip(Request &req, Response &res){
     case 12 :
       result = test_74157N();
       break;
-      /*
     case 13 :
       result = test_74161N();
       break;
@@ -1852,14 +1864,14 @@ void putResult(Request &req, Response &res) {
 void setup() {
   Serial.begin(115200);
 
-  WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println(WiFi.localIP());
+  // WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
+  // while (WiFi.status() != WL_CONNECTED) {
+  //   delay(500);
+  //   Serial.print(".");
+  // }
+  // Serial.println(WiFi.localIP());
 
-  /*
+  
   // To enable softAP
   WiFi.disconnect();
   delay(3000);
@@ -1867,7 +1879,7 @@ void setup() {
   WiFi.softAP("ESP32_Network","123456789");
   Serial.println("The IP of the access point is");
   Serial.println((WiFi.softAPIP()));
-  */
+  
 
   app.get("/chip", &readChip);
   app.put("/chip", &updateChip);
