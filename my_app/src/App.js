@@ -12,12 +12,14 @@ class App extends Component {
     this.state = { 
       ledOn: false, 
       homePage: true,
-      chipIdx:0
+      chipIdx:0,
+      isLoaded:false
     };
 
     this.changePage = this.changePage.bind(this);
     this.chooseScreen = this.chooseScreen.bind(this);
     this.chooseChip = this.chooseChip.bind(this);
+    this.handleLoad = this.handleLoad.bind(this);
   }
 
   setChipState(state) {
@@ -34,6 +36,14 @@ class App extends Component {
     fetch('/chip', { method: 'PUT', body: this.state.chipIdx })
       .then(response => response.text())
       .then(state => this.setChipState(state));
+  }
+
+  handleBack() {
+    this.setState({ isLoaded: false });
+  }
+
+  handleLoad(){
+    this.setState({ isLoaded: true });
   }
 
   changePage() {
@@ -70,12 +80,14 @@ class App extends Component {
         <div>
           <Button 
             variant="contained"
-            onClick={ this.changePage }
+            onClick={() => {this.handleBack(); this.changePage()} }
           >Back</Button>
 
           <Output
             chipIdx={this.state.chipIdx}
             chooseChip={this.chooseChip}
+            isLoaded={this.state.isLoaded}
+            handleLoad={this.handleLoad}
           />
         </div>
       )
