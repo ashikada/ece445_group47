@@ -11,7 +11,7 @@
 WiFiServer server(80);
 Application app;
 bool ledOn;
-char chipIdx;
+unsigned int chipIdx;
 
 // Test Vector Setup
 #include <MCP23S17.h>
@@ -556,7 +556,7 @@ bool test_7427() {
   vectorTime = endTime - startTime;
   return true;
 }
-/*
+
 bool test_7474() {
   //  set 5V decoder pins
   pinMode(decoderB, OUTPUT);
@@ -626,7 +626,7 @@ bool test_7474() {
   vectorTime = endTime - startTime;
   return true;
 }
-
+/*
 bool test_7485() {
   //  set 5V decoder pins
   pinMode(decoderB, OUTPUT);
@@ -637,19 +637,21 @@ bool test_7485() {
   portEx.pinMode(chip8, OUTPUT);
   portEx.digitalWrite(chip8, LOW);
   //  set IC chip inputs (outputs on port expander)
-  portEx.pinMode(chip, OUTPUT);
-  portEx.pinMode(chip, OUTPUT);
-  portEx.pinMode(chip, OUTPUT);
-  portEx.pinMode(chip, OUTPUT);
-  portEx.pinMode(chip, OUTPUT);
-  portEx.pinMode(chip, OUTPUT);
-  portEx.pinMode(chip, OUTPUT);
-  portEx.pinMode(chip, OUTPUT);
+  portEx.pinMode(chip1, OUTPUT);
+  portEx.pinMode(chip2, OUTPUT);
+  portEx.pinMode(chip3, OUTPUT);
+  portEx.pinMode(chip4, OUTPUT);
+  portEx.pinMode(chip20, OUTPUT);
+  portEx.pinMode(chip19, OUTPUT);
+  portEx.pinMode(chip18, OUTPUT);
+  portEx.pinMode(chip17, OUTPUT);
+  portEx.pinMode(chip16, OUTPUT);
+  portEx.pinMode(chip15, OUTPUT);
+  portEx.pinMode(chip14, OUTPUT);
   //  set IC chip outputs (inputs on port expander)
-  portEx.pinMode(chip, INPUT);
-  portEx.pinMode(chip, INPUT);
-  portEx.pinMode(chip, INPUT);
-  portEx.pinMode(chip, INPUT);
+  portEx.pinMode(chip5, INPUT);
+  portEx.pinMode(chip6, INPUT);
+  portEx.pinMode(chip7, INPUT);
   //  set unused ZIF pins
   portEx.pinMode(chip21, OUTPUT);
 
@@ -657,8 +659,44 @@ bool test_7485() {
   unsigned long startTime = micros();
 
   //  test vectors
-  portEx.writePort(0x);
+  portEx.writePort(0x5300);
   uint16_t output = portEx.readPort();
+  //Serial.println(output, HEX);
+  if (output != 0x5310) {
+    return false;
+  }
+  portEx.writePort(0x2C09);
+  output = portEx.readPort();
+  //Serial.println(output, HEX);
+  if (output != 0x2C49) {
+    return false;
+  }
+  portEx.writePort(0x);
+  output = portEx.readPort();
+  //Serial.println(output, HEX);
+  if (output != 0x) {
+    return false;
+  }
+  portEx.writePort(0x);
+  output = portEx.readPort();
+  //Serial.println(output, HEX);
+  if (output != 0x) {
+    return false;
+  }
+  portEx.writePort(0x);
+  output = portEx.readPort();
+  //Serial.println(output, HEX);
+  if (output != 0x) {
+    return false;
+  }
+  portEx.writePort(0x);
+  output = portEx.readPort();
+  //Serial.println(output, HEX);
+  if (output != 0x) {
+    return false;
+  }
+  portEx.writePort(0x);
+  output = portEx.readPort();
   //Serial.println(output, HEX);
   if (output != 0x) {
     return false;
@@ -1289,35 +1327,35 @@ void readChip(Request &req, Response &res){
   Serial.println(chipIdx);
   bool result;
   switch (chipIdx) {  //  this does not work properly
-    case 0 :
+    case 48 :
       result = test_7400();
       break;
-    case 1 :
+    case 49 :
       result = test_7402();
       break;
-    case 2 :
+    case 50 :
       result = test_7404();
       break;
-    case 3 :
+    case 51 :
       result = test_7410();
       break;
-    case 4 :
+    case 52 :
       result = test_7420();
       break;
-    case 5 :
+    case 53 :
       result = test_7427();
       break;
     /*
-    case 6 :
+    case 54 :
       result = test_7474();
       break;
-    case 7 :
+    case 55 :
       result = test_7485();
       break;
-    case 8 :
+    case 56 :
       result = test_7486();
       break;
-    case 9 :
+    case 57 :
       result = test_74109N();
       break;
     case 10 :
@@ -1343,7 +1381,8 @@ void readChip(Request &req, Response &res){
       break;
       */
     default :
-      result = true;
+      result = false;
+      Serial.println("Invalid Chip Index");
   }
   Serial.print("Result:" );
   Serial.println(result);
